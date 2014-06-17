@@ -102,7 +102,7 @@ class pdbg
     ));
     return $this;
   }
-  function hdigh($x) //how do I get here
+  function hdigh() //how do I get here
   {
     $bt = debug_backtrace(~DEBUG_BACKTRACE_PROVIDE_OBJECT&~DEBUG_BACKTRACE_IGNORE_ARGS);
     $log = '';
