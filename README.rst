@@ -13,34 +13,34 @@ References
 Instantination
 --------------
 
-pdbg(), Pdbg::getInst()
-~~~~~~~~~~~~~~~~~~~~~~~
+pdbg(), Pdbg::getInst(), _p()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Returns singleton instance of ``pdbg`` class.
 
 Logging and dumping
 -------------------
 
-log(msg)
-~~~~~~~~
+log(msg), l(msg)
+~~~~~~~~~~~~~~~~
 
 Append a message from ``msg`` to log buffer with timestamp prefix.
 
-point([desc])
-~~~~~~~~~~~~~
+point([desc]), p([desc])
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appends a check point message to log buffer. Description of check point
 will be added if present in ``desc``.
 
-dump(var[, desc])
-~~~~~~~~~~~~~~~~~
+dump(var[, desc]), d(var[, desc])
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Append an exported variable to log buffer. ``var_export`` fce is used to get
 the exported content of variable. Description of dump will be added if
 present in ``desc``.
 
-hdump(var[, desc])
-~~~~~~~~~~~~~~~~~~
+hdump(var[, desc]), hd(var[, desc)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Same as ``dump``, but with syntax highlight in html. Improves readability
 in browsers but it worsen it in console output.
@@ -59,14 +59,14 @@ Pdbg can provide multiple benchmarks. Bench marks have their own buffer, so
 by ending the last started benchmark will be ended. Benchmarsk are
 messaured in microsecond precission.
 
-bstart([desc])
-~~~~~~~~~~~~~~
+bstart([desc]), bs([desc])
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Starts a new bechmark and mark it to log buffer with description
 (default='-').
 
-bench()
-~~~~~~~
+bench(), b()
+~~~~~~~~~~~~
 
 Ends the last started benchmark and mark it to log buffer with message
 containing the duration of the benchmark in miliseconds units.
@@ -74,21 +74,21 @@ containing the duration of the benchmark in miliseconds units.
 Flushing the buffer
 -------------------
 
-flush()
-~~~~~~~
+flush(), fl()
+~~~~~~~~~~~~~
 
 Stops outputbuffer if present. Flushes the content of log buffer to
 stdout without any surrounding tags and dies. This is good for console
 debugging.
 
-hflush()
-~~~~~~~~
+hflush(), hfl()
+~~~~~~~~~~~~~~~
 
 Same as ``flush()``, but it uses ``htmlentities`` and ``<pre>`` tags to format
 output, so it would be more readable in html output.
 
-fflush([append])
-~~~~~~~~~~~~~~
+fflush([append]), ffl([append])
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Flushes the content of log buffer to file ``pdbg.log`` without any
 formatting. If ``append`` is ``true``, the content will be appended to the
