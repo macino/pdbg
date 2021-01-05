@@ -3,8 +3,10 @@
 class pdbg
 {
   private $buff = "";
-  private function __construct() {}
   private static $inst;
+  public $testEnv = false;
+
+  private function __construct() {}
   static function getInst()
   {
     if (!self::$inst) {
@@ -19,19 +21,40 @@ class pdbg
     }
     return $this;
   }
+  private function mtime()
+  {
+  	if ($this->testEnv) {
+  		return 0.123456;
+	  }
+  	return microtime(true);
+  }
+  private function date()
+  {
+  	if ($this->testEnv) {
+  		return '11:22:33';
+	  }
+  	return date('H:i:s');
+  }
   function flush()
   {
+  	if ($this->testEnv) {
+    	return $this->buff;
+		}
     $this->stopOb();
     echo $this->buff;
     die('--pdbg--');
   }
   function hflush()
   {
-    $this->stopOb();
-    echo sprintf(
+    $out = sprintf(
       "<pre>%s</pre>"
     , $this->buff
     );
+    if ($this->testEnv) {
+    	return $out;
+		}
+    $this->stopOb();
+    echo $out;
     die('--pdbg--');
   }
   function fflush($append = true)
@@ -41,10 +64,10 @@ class pdbg
   }
   function log($msg)
   {
-    $mtime = microtime(true);
+    $mtime = $this->mtime();
     $mtime = floor(($mtime - floor($mtime)) * pow(10,6));
     $this->buff .=
-      "[" . date("H:i:s") . "." . $mtime . "] "
+      "[" . $this->date() . "." . $mtime . "] "
     . $msg . "\n"
     ;
     return $this;
@@ -83,7 +106,7 @@ class pdbg
       $this->bench
     , array(
         'desc' => $desc,
-        'time' => microtime(true),
+        'time' => $this->mtime(),
       )
     );
     $this->log(sprintf(
@@ -98,7 +121,7 @@ class pdbg
     $this->log(sprintf(
       "BNCH (%s) %f ms"
     , $b['desc']
-    , (microtime(true) - $b['time']) * 1000
+    , ($this->mtime() - $b['time']) * 1000
     ));
     return $this;
   }
