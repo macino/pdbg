@@ -5,6 +5,7 @@ class pdbg
   private $buff = "";
   private static $inst;
   public $testEnv = false;
+  public $logFile = 'pdbg.log';
 
   private function __construct() {}
   static function getInst()
@@ -41,6 +42,10 @@ class pdbg
   		$this->buff = "";
 		}
   }
+  function setLogFile($logFile = 'pdbg.log')
+  {
+  	$this->logFile = $logFile;
+  }
   function flush()
   {
   	if ($this->testEnv) {
@@ -66,7 +71,7 @@ class pdbg
   function fflush($append = true)
   {
     $flag = $append ? FILE_APPEND : 0;
-    file_put_contents("pdbg.log", $this->buff, $flag);
+    file_put_contents($this->logFile, $this->buff, $flag);
   }
   function log($msg)
   {

@@ -50,14 +50,16 @@ class pdbgTest extends TestCase
   }  public function testLogFflush()
   {
     pdbg()->restart();
+    $logFile = 'test.log';
+    pdbg()->setLogFile($logFile);
     pdbg()->log('test')->fflush();
-    $this->assertFileExists('pdbg.log');
+    $this->assertFileExists($logFile);
     $this->assertEquals(
       "[11:22:33.123456] test\n"
-      , file_get_contents('pdbg.log')
+      , file_get_contents($logFile)
       , 'Log and fflush'
     );
-    unlink('pdbg.log');
+    unlink($logFile);
   }
   public function testBenchFlush()
   {
