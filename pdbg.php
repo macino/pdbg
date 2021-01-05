@@ -35,6 +35,12 @@ class pdbg
 	  }
   	return date('H:i:s');
   }
+  function restart()
+  {
+  	if ($this->testEnv) {
+  		$this->buff = "";
+		}
+  }
   function flush()
   {
   	if ($this->testEnv) {
