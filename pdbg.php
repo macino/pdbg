@@ -3,6 +3,7 @@
 class pdbg
 {
   private $buff = "";
+  private $point = 1;
   private static $inst;
   public $testEnv = false;
   public $logFile = 'pdbg.log';
@@ -40,6 +41,7 @@ class pdbg
   {
   	if ($this->testEnv) {
   		$this->buff = "";
+  		$this->point = 1;
 		}
   }
   function setLogFile($logFile = 'pdbg.log')
@@ -55,6 +57,9 @@ class pdbg
     echo $this->buff;
     die('--pdbg--');
   }
+  function fl(){
+  	return $this->flush();
+  }
   function hflush()
   {
     $out = sprintf(
@@ -66,12 +71,20 @@ class pdbg
 		}
     $this->stopOb();
     echo $out;
-    die('--pdbg--');
+    die ('--pdbg--');
+  }
+  function hfl()
+  {
+  	return $this->hflush();
   }
   function fflush($append = true)
   {
     $flag = $append ? FILE_APPEND : 0;
     file_put_contents($this->logFile, $this->buff, $flag);
+  }
+  function ffl($append = true)
+  {
+  	return $this->fflush($append);
   }
   function log($msg)
   {
@@ -83,7 +96,10 @@ class pdbg
     ;
     return $this;
   }
-  private $point = 1;
+  function l($msg)
+  {
+  	return $this->log($msg);
+  }
   function point($desc = '') {
     if ($desc) {
       $desc = ' ' . $desc;
@@ -91,11 +107,19 @@ class pdbg
     $this->log("CHPT #" . $this->point++ . $desc);
     return $this;
   }
+  function p($desc = '')
+  {
+  	return $this->point($desc);
+  }
   function dump($var, $desc = '')
   {
     $desc .= "\n";
     $this->log($desc . var_export($var, true));
     return $this;
+  }
+  function d($var, $desc = '')
+  {
+  	return $this->dump($var, $desc);
   }
   function hdump($var, $desc = '')
   {
@@ -109,6 +133,10 @@ class pdbg
       )
     );
     return $this;
+  }
+  function hd($var, $desc = '')
+  {
+  	return $this->hdump($var, $desc);
   }
   private $bench = array();
   function bstart($desc = '-')
@@ -126,6 +154,10 @@ class pdbg
     ));
     return $this;
   }
+  function bs($desc = '-')
+  {
+		return $this->bstart($desc);
+  }
   function bench()
   {
     $b = array_shift($this->bench);
@@ -135,6 +167,10 @@ class pdbg
     , ($this->mtime() - $b['time']) * 1000
     ));
     return $this;
+  }
+  function b()
+  {
+  	return $this->bench();
   }
   function hdigh() //how do I get here
   {
@@ -162,3 +198,7 @@ function pdbg()
   return pdbg::getInst();
 }
 
+function _p()
+{
+	return pdbg();
+}
