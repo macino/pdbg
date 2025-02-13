@@ -1,6 +1,6 @@
 <?php
 
-namespace Macino\Pdbg
+namespace Macino\Pdbg;
 
 class pdbg
 {
