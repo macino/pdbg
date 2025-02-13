@@ -1,5 +1,7 @@
 <?php
 
+namespace Macino\Pdbg
+
 class pdbg
 {
   private $buff = "";
@@ -25,40 +27,40 @@ class pdbg
   }
   private function mtime()
   {
-  	if ($this->testEnv) {
-  		return 0.123456;
-	  }
-  	return microtime(true);
+    if ($this->testEnv) {
+      return 0.123456;
+    }
+    return microtime(true);
   }
   private function date()
   {
-  	if ($this->testEnv) {
-  		return '11:22:33';
-	  }
-  	return date('H:i:s');
+    if ($this->testEnv) {
+      return '11:22:33';
+    }
+    return date('H:i:s');
   }
   function restart()
   {
-  	if ($this->testEnv) {
-  		$this->buff = "";
-  		$this->point = 1;
-		}
+    if ($this->testEnv) {
+      $this->buff = "";
+      $this->point = 1;
+    }
   }
   function setLogFile($logFile = 'pdbg.log')
   {
-  	$this->logFile = $logFile;
+    $this->logFile = $logFile;
   }
   function flush()
   {
-  	if ($this->testEnv) {
-    	return $this->buff;
-		}
+    if ($this->testEnv) {
+      return $this->buff;
+    }
     $this->stopOb();
     echo $this->buff;
     die('--pdbg--');
   }
   function fl(){
-  	return $this->flush();
+    return $this->flush();
   }
   function hflush()
   {
@@ -67,15 +69,15 @@ class pdbg
     , $this->buff
     );
     if ($this->testEnv) {
-    	return $out;
-		}
+      return $out;
+    }
     $this->stopOb();
     echo $out;
     die ('--pdbg--');
   }
   function hfl()
   {
-  	return $this->hflush();
+    return $this->hflush();
   }
   function fflush($append = true)
   {
@@ -84,7 +86,7 @@ class pdbg
   }
   function ffl($append = true)
   {
-  	return $this->fflush($append);
+    return $this->fflush($append);
   }
   function log($msg)
   {
@@ -98,7 +100,7 @@ class pdbg
   }
   function l($msg)
   {
-  	return $this->log($msg);
+    return $this->log($msg);
   }
   function point($desc = '') {
     if ($desc) {
@@ -109,7 +111,7 @@ class pdbg
   }
   function p($desc = '')
   {
-  	return $this->point($desc);
+    return $this->point($desc);
   }
   function dump($var, $desc = '')
   {
@@ -119,7 +121,7 @@ class pdbg
   }
   function d($var, $desc = '')
   {
-  	return $this->dump($var, $desc);
+    return $this->dump($var, $desc);
   }
   function hdump($var, $desc = '')
   {
@@ -136,7 +138,7 @@ class pdbg
   }
   function hd($var, $desc = '')
   {
-  	return $this->hdump($var, $desc);
+    return $this->hdump($var, $desc);
   }
   private $bench = array();
   function bstart($desc = '-')
@@ -156,7 +158,7 @@ class pdbg
   }
   function bs($desc = '-')
   {
-		return $this->bstart($desc);
+    return $this->bstart($desc);
   }
   function bench()
   {
@@ -170,7 +172,7 @@ class pdbg
   }
   function b()
   {
-  	return $this->bench();
+    return $this->bench();
   }
   function hdigh() //how do I get here
   {
@@ -200,5 +202,5 @@ function pdbg()
 
 function _p()
 {
-	return pdbg();
+  return pdbg();
 }
